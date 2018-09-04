@@ -1,0 +1,12 @@
+{
+  "config": {
+    "prettierFiles": "**/*.{js,css,ts,tsx}"
+  },
+  "scripts": {
+    "fix-style": "prettier --write $npm_package_config_prettierFiles"
+  },
+  "devDependencies": {
+    "firebase-tools": "^4.2.1",
+    "prettier": "^1.14.2"
+  }
+}
