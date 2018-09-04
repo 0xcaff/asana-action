@@ -1,29 +1,46 @@
 import * as React from "react";
-import "./App.css";
-
-import logo from "./logo.svg";
 
 import { GoogleSignIn } from "./GoogleSignIn";
+import { AuthResponse } from "./GAPI";
+import { ids } from "./clients";
+import { AsanaSignIn } from "./AsanaSignIn";
 
-class App extends React.Component {
+enum Step {
+  GOOGLE_SIGN_IN,
+  ASANA_SIGN_IN
+}
+
+interface State {
+  step: Step;
+}
+
+class App extends React.Component<{}, State> {
+  public state = { step: Step.GOOGLE_SIGN_IN };
+
+  private onGoogleSignedIn = (response: AuthResponse) => {
+    console.log(response);
+    this.setState({ step: Step.ASANA_SIGN_IN });
+  };
+
   public render() {
-    return (
-      <div className="App">
-        <GoogleSignIn
-          clientId="942954643395-0dngcnr16e988cc91262vgln9scfug8u.apps.googleusercontent.com"
-          onSignInChanged={console.log}
-        />
+    switch (this.state.step) {
+      case Step.GOOGLE_SIGN_IN:
+        return (
+          <GoogleSignIn
+            clientId={ids.google.clientId}
+            onSignInChanged={this.onGoogleSignedIn}
+          />
+        );
 
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </div>
-    );
+      case Step.ASANA_SIGN_IN:
+        return (
+          <AsanaSignIn
+            options={{ ...ids.asana, responseType: "code", state: "" }}
+          >
+            Sign In to Asana!
+          </AsanaSignIn>
+        );
+    }
   }
 }
 
