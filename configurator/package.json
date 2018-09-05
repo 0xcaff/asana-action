@@ -2,9 +2,21 @@
   "name": "configurator",
   "version": "0.1.0",
   "private": true,
+  "proxy": {
+    "/graphql": {
+      "target": "http://localhost:5001/asana-e43ee/us-central1/graphql"
+    }
+  },
   "dependencies": {
     "@types/react-router-dom": "^4.3.0",
+    "apollo-cache-inmemory": "^1.2.9",
+    "apollo-client": "^2.4.1",
+    "apollo-link-context": "^1.0.8",
+    "apollo-link-http": "^1.5.4",
+    "graphql": "^14.0.0",
+    "graphql-tag": "^2.9.2",
     "react": "^16.4.2",
+    "react-apollo": "^2.1.11",
     "react-dom": "^16.4.2",
     "react-router-dom": "^4.3.1",
     "react-scripts-ts": "2.17.0"

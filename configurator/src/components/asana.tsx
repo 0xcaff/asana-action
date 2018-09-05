@@ -1,14 +1,3 @@
-import * as React from "react";
-
-interface Props {
-  options: Options;
-  children: React.ReactNode;
-}
-
-export const AsanaSignIn = (props: Props) => (
-  <a href={getAuthorizationEndpoint(props.options)}>{props.children}</a>
-);
-
 interface Options {
   clientId: string;
   redirectUri: string;

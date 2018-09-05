@@ -1,4 +1,4 @@
-import { getAuthorizationEndpoint } from "./AsanaSignIn";
+import { getAuthorizationEndpoint } from "./asana";
 import { rawIds } from "../clients";
 
 it("should generate the correct authorization endpoint", () => {
