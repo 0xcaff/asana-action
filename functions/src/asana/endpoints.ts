@@ -42,14 +42,12 @@ export async function createTask(
   return await unwrapResponse<Task>(resp);
 }
 
-async function unwrapResponse<T>(request: Response): Promise<T> {
-  const response = await request.json();
-
-  if (response.status >= 400) {
-    throw await response.text();
+async function unwrapResponse<T>(resp: Response): Promise<T> {
+  if (resp.status >= 400) {
+    throw await resp.text();
   }
 
-  const json: Envelope<T> = await response.json();
+  const json: Envelope<T> = await resp.json();
   if (json.errors) {
     throw json;
   }

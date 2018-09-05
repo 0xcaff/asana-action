@@ -6,6 +6,6 @@ import { context } from "./context";
 
 export const server = new ApolloServer({
   typeDefs,
-  resolvers: { Mutation: mutations, Query: queries },
+  resolvers: { Mutation: mutations, ...queries },
   context
 });

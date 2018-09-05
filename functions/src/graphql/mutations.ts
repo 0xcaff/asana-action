@@ -1,8 +1,7 @@
 import { db } from "../database";
 import { Context } from "./context";
-import { exchangeAuthorizationCode } from "../asana";
+import { exchangeAuthorizationCode, convertToDatabaseToken } from "../asana";
 import { credentials } from "../asana/credentials";
-import { convertToDatabaseToken } from "../asana/refresh";
 import { IResolverObject } from "apollo-server-express";
 
 export const mutations: IResolverObject<void, Context> = {

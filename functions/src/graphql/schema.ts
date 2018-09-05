@@ -6,13 +6,13 @@ export const typeDefs = gql`
     name: String!
   }
 
-  type Asana {
+  type AsanaInformation {
     workspaces: [Workspace!]!
     chosenWorkspace: Workspace
   }
 
   type User {
-    asana: Asana
+    asana: AsanaInformation
   }
 
   type Query {

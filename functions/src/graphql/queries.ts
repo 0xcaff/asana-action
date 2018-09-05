@@ -13,12 +13,16 @@ interface Workspace {
   name: string;
 }
 
-const mapWorspace = (apiWorkspace: APIWorkspace): Workspace => ({
+const mapWorkspace = (apiWorkspace: APIWorkspace): Workspace => ({
   id: apiWorkspace.gid,
   name: apiWorkspace.name
 });
 
 export const queries: IResolverObject<void, Context> = {
+  Query: {
+    me: () => ({})
+  },
+
   User: {
     async asana(_parent: void, _args, context: Context): Promise<Asana | null> {
       const user = await db.getUser(context.userId);
@@ -26,7 +30,7 @@ export const queries: IResolverObject<void, Context> = {
     }
   },
 
-  Asana: {
+  AsanaInformation: {
     async workspaces(
       asana: Asana,
       _args,
@@ -34,7 +38,7 @@ export const queries: IResolverObject<void, Context> = {
     ): Promise<Workspace[]> {
       await refreshAndSaveToken(asana, context.userId, db);
       const workspaces = await getWorkspaces(asana.accessToken.token);
-      return workspaces.map(mapWorspace);
+      return workspaces.map(mapWorkspace);
     },
 
     async chosenWorkspace(
@@ -51,7 +55,7 @@ export const queries: IResolverObject<void, Context> = {
         asana.chosenWorkspaceId,
         asana.accessToken.token
       );
-      return mapWorspace(workspace);
+      return mapWorkspace(workspace);
     }
   } as IResolverObject<Asana, Context>
 };

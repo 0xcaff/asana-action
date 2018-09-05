@@ -30,7 +30,12 @@ async function verify(idToken: string): Promise<string> {
   return payload.sub;
 }
 
-export async function context(request: Request): Promise<Context> {
+interface ContextSource {
+  req: Request;
+}
+
+export async function context(source: ContextSource): Promise<Context> {
+  const request = source.req;
   const authorization = request.headers.authorization;
   if (!authorization) {
     throw new TypeError("No Authorization Header Provided");
