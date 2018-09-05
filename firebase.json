@@ -18,7 +18,15 @@
       {
         "source": "**",
         "destination": "/index.html"
+      },
+      {
+        "source": "/graphql",
+        "function": "graphql"
       }
     ]
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
   }
 }

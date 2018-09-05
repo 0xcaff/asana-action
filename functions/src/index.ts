@@ -1,8 +1,8 @@
 import * as functions from "firebase-functions";
+import * as express from "express";
+import { server } from "./graphql";
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+const app = express();
+server.applyMiddleware({ app, path: "/" });
+
+export const graphql = functions.https.onRequest(app);
