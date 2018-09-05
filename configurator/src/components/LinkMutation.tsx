@@ -7,6 +7,8 @@ import { Omit } from "../utils";
 const mutation = gql`
   mutation LinkMutation($code: String!) {
     linkAsana(authorizationCode: $code) {
+      id
+
       asana {
         chosenWorkspace {
           id

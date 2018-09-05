@@ -12,6 +12,7 @@ export const typeDefs = gql`
   }
 
   type User {
+    id: String!
     asana: AsanaInformation
   }
 

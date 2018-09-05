@@ -24,6 +24,8 @@ export const queries: IResolverObject<void, Context> = {
   },
 
   User: {
+    id: (_parent: void, _args, context: Context): string => context.userId,
+
     async asana(_parent: void, _args, context: Context): Promise<Asana | null> {
       const user = await db.getUser(context.userId);
       return user.asana || null;
