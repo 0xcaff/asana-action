@@ -7,7 +7,7 @@ import {
   GoogleUser,
   Auth2Instance,
   AuthResponse
-} from "./GAPI";
+} from "../GAPI";
 
 interface Props {
   clientId: string;

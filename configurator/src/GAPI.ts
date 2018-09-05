@@ -19,7 +19,7 @@ interface LiveData {
 
 export interface SignIn2 {
   render: (
-    elemenet: HTMLElement,
+    element: HTMLElement,
     opts: {
       scope: string;
       onsuccess: (user: GoogleUser) => void;

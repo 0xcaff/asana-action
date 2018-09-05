@@ -1,5 +1,5 @@
 import { getAuthorizationEndpoint } from "./AsanaSignIn";
-import { rawIds } from "./clients";
+import { rawIds } from "../clients";
 
 it("should generate the correct authorization endpoint", () => {
   const asana = rawIds.development.asana;
