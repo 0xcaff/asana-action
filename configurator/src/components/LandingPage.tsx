@@ -69,8 +69,9 @@ const Circle = styled.div`
   width: 2000px;
   height: 2000px;
 
-  margin-left: -1000px;
-  margin-top: calc(-1000px + 50vh);
+  position: absolute;
+  left: -1000px;
+  top: calc(-1000px + 50vh);
 `;
 
 const CircleContainer = styled.div`
@@ -97,8 +98,8 @@ const Action = styled.div`
 `;
 
 const LogosContainer = styled.div`
+  margin-left: 1000px;
   flex: 1;
-  align-self: center;
 
   display: flex;
   flex-direction: row;
