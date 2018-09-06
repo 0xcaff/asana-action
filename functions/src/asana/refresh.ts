@@ -5,12 +5,13 @@ import {
 } from "../database";
 import { AccessToken, refreshAccessToken } from "./auth";
 import { credentials } from "./credentials";
+import { getTime } from "../time";
 
 export const convertToDatabaseToken = (
   token: AccessToken
 ): DatabaseAccessToken => ({
   token: token.access_token,
-  expiryTime: new Date().getSeconds() + token.expires_in
+  expiryTime: getTime() + token.expires_in
 });
 
 /**
@@ -20,7 +21,7 @@ export const convertToDatabaseToken = (
  * @param asana Container for token information.
  */
 async function refreshTokenIfNeeded(asana: Asana): Promise<void> {
-  const currentTime = new Date().getSeconds();
+  const currentTime = getTime();
 
   if (currentTime < asana.accessToken.expiryTime - 60) {
     return;
