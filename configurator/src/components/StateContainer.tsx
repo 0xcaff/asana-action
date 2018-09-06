@@ -20,10 +20,6 @@ export class StateContainer extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {
-      authToken: window.localStorage.getItem("authToken") as string
-    };
-
     this.props.onSetAuthToken(this.state.authToken);
   }
 
@@ -32,7 +28,6 @@ export class StateContainer extends React.Component<Props, State> {
       authToken: this.state.authToken,
       setAuthToken: authToken => {
         this.props.onSetAuthToken(authToken);
-        window.localStorage.setItem("authToken", authToken);
         this.setState({ authToken });
       }
     });

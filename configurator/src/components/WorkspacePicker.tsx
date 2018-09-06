@@ -2,7 +2,7 @@ import { Workspace } from "./AsanaQuery";
 
 interface Props {
   workspaces: Workspace[];
-  chosenWorkspaceId?: string;
+  chosenWorkspaceId: string | null;
   choseWorkspace: (newWorkspaceId: string) => void;
 }
 

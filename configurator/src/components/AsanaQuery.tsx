@@ -34,7 +34,7 @@ interface BareWorkspace {
 
 interface Asana {
   workspaces: Workspace[];
-  chosenWorkspace: BareWorkspace;
+  chosenWorkspace: BareWorkspace | null;
 }
 
 interface User {

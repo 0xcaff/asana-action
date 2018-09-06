@@ -3,7 +3,7 @@ import * as React from "react";
 import { GoogleSignIn } from "./GoogleSignIn";
 import { ids } from "../clients";
 import { Redirect } from "react-router";
-import { configurationPage } from "./paths";
+import { configurationPage } from "../paths";
 
 interface Props {
   token?: string;

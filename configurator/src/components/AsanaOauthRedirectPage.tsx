@@ -1,12 +1,11 @@
 import * as React from "react";
 import { LinkMutation } from "./LinkMutation";
 import { Redirect } from "react-router";
-import { configurationPage } from "./paths";
+import { configurationPage } from "../paths";
 import { CallOnMount } from "./CallOnWillMount";
 
 interface Props {
   code: string | null;
-  state: string | null;
 }
 
 export const AsanaOauthRedirectPage = (props: Props) => {

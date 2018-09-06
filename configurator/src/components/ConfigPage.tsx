@@ -4,7 +4,7 @@ import { AsanaQuery } from "./AsanaQuery";
 import { getAuthorizationEndpoint } from "./asana";
 import { ids } from "../clients";
 import { Redirect } from "react-router";
-import { landingPage } from "./paths";
+import { landingPage } from "../paths";
 import { WorkspacePicker } from "./WorkspacePicker";
 import { SetDefaultWorkspaceMutation } from "./SetDefaultWorkspaceMutation";
 
@@ -13,7 +13,8 @@ interface Props {
 }
 
 export const ConfigPage = (props: Props) => {
-  if (!props.authToken) {
+  const authToken = props.authToken;
+  if (!authToken) {
     return <Redirect to={landingPage} />;
   }
 
@@ -32,7 +33,7 @@ export const ConfigPage = (props: Props) => {
           window.location.assign(
             getAuthorizationEndpoint({
               responseType: "code",
-              state: "",
+              state: authToken,
               ...ids.asana
             })
           );
@@ -46,7 +47,9 @@ export const ConfigPage = (props: Props) => {
             {mutateFn => (
               <WorkspacePicker
                 workspaces={myAsana.workspaces}
-                chosenWorkspaceId={myAsana.chosenWorkspace.id}
+                chosenWorkspaceId={
+                  myAsana.chosenWorkspace && myAsana.chosenWorkspace.id
+                }
                 choseWorkspace={workspaceId =>
                   mutateFn({ variables: { workspaceId } })
                 }

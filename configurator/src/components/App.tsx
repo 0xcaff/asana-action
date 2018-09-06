@@ -8,7 +8,7 @@ import { StateContainer } from "./StateContainer";
 import { ApolloProvider } from "react-apollo";
 
 import { authLink, client } from "../graphql/client";
-import { configurationPage, landingPage } from "./paths";
+import { configurationPage, landingPage } from "../paths";
 
 export const App = () => (
   <BrowserRouter>
@@ -39,9 +39,14 @@ export const App = () => (
               render={renderProps => {
                 const params = new URLSearchParams(renderProps.location.search);
                 const code = params.get("code");
-                const state = params.get("state");
 
-                return <AsanaOauthRedirectPage code={code} state={state} />;
+                const token = params.get("state");
+                if (token == null) {
+                  return <div>Error</div>;
+                }
+                state.setAuthToken(token);
+
+                return <AsanaOauthRedirectPage code={code} />;
               }}
             />
           </Switch>
