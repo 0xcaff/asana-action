@@ -1,0 +1,40 @@
+{
+  "$schema": "./action.schema.json",
+  "actions": [
+    {
+      "name": "MAIN",
+      "fulfillment": {
+        "conversationName": "fulfillment"
+      },
+      "intent": {
+        "name": "actions.intent.MAIN"
+      }
+    },
+    {
+      "name": "ADD_TASK",
+      "fulfillment": {
+        "conversationName": "fulfillment"
+      },
+      "intent": {
+        "name": "ADD_TASK",
+        "parameters": [
+          {
+            "name": "name",
+            "type": "$org.schema.type.Text"
+          }
+        ],
+        "trigger": {
+          "queryPatterns": ["add task $org.schema.type.Text:name"]
+        }
+      }
+    }
+  ],
+  "conversations": {
+    "fulfillment": {
+      "name": "fulfillment",
+      "url": "https://asana-action.0xcaff.me/fulfillment",
+      "fulfillmentApiVersion": 2
+    }
+  },
+  "locale": "en"
+}

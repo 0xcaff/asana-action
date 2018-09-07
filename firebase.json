@@ -9,11 +9,7 @@
   "hosting": {
     "predeploy": "yarn --cwd configurator build",
     "public": "configurator/build",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
@@ -22,6 +18,10 @@
       {
         "source": "/graphql",
         "function": "graphql"
+      },
+      {
+        "source": "/fulfillment",
+        "function": "fulfilment"
       }
     ]
   },
