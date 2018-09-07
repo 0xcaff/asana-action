@@ -11,7 +11,7 @@ interface Props {
 
 export const AsanaOauthRedirectPage = (props: Props) => {
   if (!props.code) {
-    return <div>Error!</div>;
+    return <FullPageError />;
   }
 
   return (

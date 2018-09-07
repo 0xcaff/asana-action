@@ -10,6 +10,7 @@ import { ApolloProvider } from "react-apollo";
 
 import { authLink, client } from "../graphql/client";
 import { configurationPage, landingPage, googleSignInPage } from "../paths";
+import { FullPageError } from "./styledComponents";
 
 export const App = () => (
   <BrowserRouter>
@@ -45,9 +46,14 @@ export const App = () => (
 
                 const token = params.get("state");
                 if (token == null) {
-                  return <div>Error</div>;
+                  return <FullPageError />;
                 }
-                state.setAuthToken(token);
+
+                if (state.authToken !== token) {
+                  // This is a side effect in render. Yes, this is bad.
+                  // Refactoring to a stateful component is harder.
+                  state.setAuthToken(token);
+                }
 
                 return <AsanaOauthRedirectPage code={code} />;
               }}
