@@ -8,4 +8,4 @@ server.applyMiddleware({ app, path: "/" });
 
 export const graphql = functions.https.onRequest(app);
 
-export const fulfilment = functions.https.onRequest(fulfilmentApp);
+export const fulfillment = functions.https.onRequest(fulfilmentApp);

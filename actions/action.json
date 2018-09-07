@@ -20,11 +20,11 @@
         "parameters": [
           {
             "name": "name",
-            "type": "$org.schema.type.Text"
+            "type": "org.schema.type.Text"
           }
         ],
         "trigger": {
-          "queryPatterns": ["add task $org.schema.type.Text:name"]
+          "queryPatterns": ["(to)? add task $org.schema.type.Text:name"]
         }
       }
     }
