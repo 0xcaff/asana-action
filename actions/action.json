@@ -1,5 +1,7 @@
 {
-  "$schema": "./action.schema.json",
+  "accountLinking": {
+    "googleSignInClientId": "942954643395-90r4fv3iqqnspl3fb16jou5drmpf6g6b.apps.googleusercontent.com"
+  },
   "actions": [
     {
       "name": "MAIN",

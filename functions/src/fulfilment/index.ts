@@ -1,5 +1,7 @@
-import { actionssdk } from "actions-on-google";
+import { actionssdk, SignIn } from "actions-on-google";
 import { isDevelopment as debug } from "../env";
+import { Data, SignInInput } from "./types";
+import { addTask } from "./addTask";
 
 export const app = actionssdk({
   debug,
@@ -11,11 +13,34 @@ export const app = actionssdk({
 });
 
 app.intent("actions.intent.MAIN", conv =>
-  conv.close(
-    `Hey, you can ask me to add tasks to Asana by saying "Tell unofficial asana to add a task "Get Groceries."`
+  conv.ask(
+    `Hey, you can ask me to add tasks to Asana by saying "Tell unofficial asana to add a task Get Groceries."`
   )
 );
 
-app.intent("actions.intent.SIGN_IN", conv => conv.close("Sign In Intent"));
+app.intent("ADD_TASK", async conv => {
+  const taskName = conv.arguments.get("name") as string;
+  if (!conv.user.profile.payload) {
+    conv.data = { taskName } as Data;
 
-app.intent("ADD_TASK", conv => conv.close("Add Task Intent"));
+    conv.ask(new SignIn("To connect with Asana"));
+    return;
+  }
+
+  await addTask(conv, conv.user.profile.payload.sub, taskName);
+});
+
+app.intent(
+  "actions.intent.SIGN_IN",
+  async (conv, params, signIn: SignInInput) => {
+    if (signIn.status !== "OK" || !conv.user.profile.payload) {
+      conv.close("Sign in failed. Please link your Google Account.");
+      return;
+    }
+
+    const data = conv.data as Data;
+    const taskName = data.taskName;
+
+    await addTask(conv, conv.user.profile.payload.sub, taskName);
+  }
+);
