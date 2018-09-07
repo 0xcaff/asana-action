@@ -1,74 +1,43 @@
 import * as React from "react";
 import styled from "styled-components";
 
-import { GoogleSignIn } from "./GoogleSignIn";
-import { ids } from "../clients";
-import { Redirect } from "react-router";
-import { configurationPage } from "../paths";
+import { Link } from "react-router-dom";
 import assistantLogo from "../logos/googleAssistant.svg";
 import asanaLogo from "../logos/asana.png";
+import { googleSignInPage } from "../paths";
+import {
+  Background,
+  BigCircle,
+  black,
+  Heading,
+  white
+} from "./styledComponents";
 
-interface Props {
-  token?: string;
-  setAuthenticationToken: (authToken: string) => void;
-}
+export const LandingPage = () => (
+  <React.Fragment>
+    <Background>
+      <Circle />
 
-export const LandingPage = (props: Props) =>
-  props.token ? (
-    <Redirect to={configurationPage} />
-  ) : (
-    <React.Fragment>
-      <Background>
-        <Circle />
+      <LogosContainer>
+        <AsanaLogo />+<AssistantLogo />
+      </LogosContainer>
+    </Background>
 
-        <LogosContainer>
-          <AsanaLogo />+<AssistantLogo />
-        </LogosContainer>
-      </Background>
+    <CircleContainer>
+      <Heading>Asana + Google Assistant</Heading>
 
-      <CircleContainer>
-        <Heading>Asana + Google Assistant</Heading>
+      <LeadText>
+        A unofficial tool to add tasks to Asana from Google Assistant.
+      </LeadText>
 
-        <LeadText>
-          A unofficial tool to add tasks to Asana from Google Assistant. Sign in
-          to get started.
-        </LeadText>
+      <Action>
+        <ActionLink to={googleSignInPage}>Get Started!</ActionLink>
+      </Action>
+    </CircleContainer>
+  </React.Fragment>
+);
 
-        <Action>
-          <GoogleSignIn
-            clientId={ids.google.clientId}
-            onSignInChanged={token => {
-              props.setAuthenticationToken(token.id_token);
-            }}
-          />
-        </Action>
-      </CircleContainer>
-    </React.Fragment>
-  );
-
-const white = "#fcfcfc";
-const purple = "#9287ff";
-
-const Background = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-  overflow: hidden;
-  background: ${white};
-
-  display: flex;
-`;
-
-const Circle = styled.div`
-  border-radius: 50%;
-  background: ${purple};
-
-  width: 2000px;
-  height: 2000px;
-
+const Circle = styled(BigCircle)`
   position: absolute;
   left: -1000px;
   top: calc(-1000px + 50vh);
@@ -80,12 +49,6 @@ const CircleContainer = styled.div`
   box-sizing: border-box;
   padding-left: 10em;
   padding-right: 10em;
-`;
-
-const Heading = styled.h1`
-  font-size: 2.3rem;
-  font-weight: normal;
-  color: ${white};
 `;
 
 const LeadText = styled.div`
@@ -123,4 +86,23 @@ const AsanaLogo = styled.img.attrs({ src: asanaLogo })`
   width: auto;
 
   margin-right: 1em;
+`;
+
+const ActionLink = styled(Link)`
+  display: inline-block;
+
+  padding-left: 24px;
+  padding-right: 24px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 3px;
+
+  text-decoration: none;
+  color: ${black};
+  background: ${white};
+  transition: background-color 0.15s;
+
+  &:hover {
+    background: #ddd;
+  }
 `;

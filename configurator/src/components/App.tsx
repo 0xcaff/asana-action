@@ -4,11 +4,12 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { LandingPage } from "./LandingPage";
 import { ConfigPage } from "./ConfigPage";
 import { AsanaOauthRedirectPage } from "./AsanaOauthRedirectPage";
+import { GoogleSignInPage } from "./GoogleSignInPage";
 import { StateContainer } from "./StateContainer";
 import { ApolloProvider } from "react-apollo";
 
 import { authLink, client } from "../graphql/client";
-import { configurationPage, landingPage } from "../paths";
+import { configurationPage, landingPage, googleSignInPage } from "../paths";
 
 export const App = () => (
   <BrowserRouter>
@@ -16,13 +17,15 @@ export const App = () => (
       <StateContainer onSetAuthToken={token => authLink.setToken(token)}>
         {state => (
           <Switch>
+            <Route exact path={landingPage} render={() => <LandingPage />} />
+
             <Route
               exact
-              path={landingPage}
+              path={googleSignInPage}
               render={() => (
-                <LandingPage
-                  token={state.authToken}
-                  setAuthenticationToken={state.setAuthToken}
+                <GoogleSignInPage
+                  isSignedIn={!!state.authToken}
+                  setToken={state.setAuthToken}
                 />
               )}
             />

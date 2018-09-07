@@ -4,9 +4,10 @@ import { AsanaQuery } from "./AsanaQuery";
 import { getAuthorizationEndpoint } from "./asana";
 import { ids } from "../clients";
 import { Redirect } from "react-router";
-import { landingPage } from "../paths";
+import { googleSignInPage } from "../paths";
 import { WorkspacePicker } from "./WorkspacePicker";
 import { SetDefaultWorkspaceMutation } from "./SetDefaultWorkspaceMutation";
+import { FullPageError, FullPageLoading } from "./styledComponents";
 
 interface Props {
   authToken?: string;
@@ -15,18 +16,18 @@ interface Props {
 export const ConfigPage = (props: Props) => {
   const authToken = props.authToken;
   if (!authToken) {
-    return <Redirect to={landingPage} />;
+    return <Redirect to={googleSignInPage} />;
   }
 
   return (
     <AsanaQuery>
       {queryResult => {
         if (queryResult.error) {
-          return <div>Error Occurred!</div>;
+          return <FullPageError />;
         }
 
         if (queryResult.loading || !queryResult.data) {
-          return <div>Loading...</div>;
+          return <FullPageLoading />;
         }
 
         if (!queryResult.data.me.asana) {
