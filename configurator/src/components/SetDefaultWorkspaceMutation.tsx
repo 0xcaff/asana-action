@@ -6,7 +6,7 @@ import { Omit } from "../utils";
 
 const mutation = gql`
   mutation SetDefaultWorkspaceMutation($workspaceId: String!) {
-    setDefaultWorkspace(workspaceId: $workspaceId) {
+    setDefaultWorkspace(id: $workspaceId) {
       id
 
       asana {

@@ -45,8 +45,9 @@ export const ConfigPage = (props: Props) => {
         const myAsana = queryResult.data.me.asana;
         return (
           <SetDefaultWorkspaceMutation>
-            {mutateFn => (
+            {(mutateFn, results) => (
               <WorkspacePicker
+                loading={results.loading}
                 workspaces={myAsana.workspaces}
                 chosenWorkspaceId={
                   myAsana.chosenWorkspace && myAsana.chosenWorkspace.id
