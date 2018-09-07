@@ -30,6 +30,7 @@ export async function createTask(
 ): Promise<Task> {
   const body = new URLSearchParams({
     name,
+    assignee: "me",
     workspace: workspaceId
   });
 
