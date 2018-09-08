@@ -1,0 +1,94 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: node:10.10
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - root-deps-{{ checksum "yarn.lock" }}
+            - root-deps-
+
+      - run:
+          name: Install Deps
+          command: yarn install --ignore-engines
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: root-deps-{{ checksum "package.json" }}
+
+      - run:
+          name: Check Style
+          command: yarn check-style
+
+  deploy:
+    docker:
+      - image: node:10.10
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - root-deps-{{ checksum "yarn.lock" }}
+            - root-deps-
+
+      - run:
+          name: Install Deps
+          command: yarn install --ignore-engines
+
+      - restore_cache:
+          keys:
+            - configurator-deps-{{ checksum "configurator/yarn.lock" }}
+            - configurator-deps-
+
+      - run:
+          name: Install Deps
+          working_directory: configurator
+          command: yarn install
+
+      - save_cache:
+          paths:
+            - configurator/node_modules
+          key: configurator-deps-{{ checksum "configurator/yarn.lock" }}
+
+      - restore_cache:
+          keys:
+            - functions-deps-{{ checksum "functions/package-lock.json" }}
+            - functions-deps-
+
+      - run:
+          name: Install Deps
+          working_directory: functions
+          command: npm install
+
+      - save_cache:
+          paths:
+            - functions/node_modules
+          key: functions-deps-{{ checksum "functions/package-lock.json" }}
+
+      - run:
+          name: Deploy
+          command: yarn firebase deploy --token "$FIREBASE_TOKEN"
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test
+
+      - hold:
+          type: approval
+          requires:
+           - test
+          filters:
+            branches:
+              only: master
+
+      - deploy:
+          requires:
+            - hold
