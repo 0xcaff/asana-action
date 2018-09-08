@@ -2,6 +2,19 @@ import { ActionsSdkConversation } from "actions-on-google";
 import { createTask, refreshAndSaveToken } from "../asana";
 import { db } from "../database";
 
+const getMessage = (result: Result): string => {
+  switch (result) {
+    case "ASANA_NOT_LINKED":
+      return `Your asana account isn't linked yet. Go to asana-action.0xcaff.me and link it.`;
+
+    case "DEFAULT_WORKSPACE_NOT_CHOSEN":
+      return `A default workspace hasn't been selected. Go to asana-action.0xcaff.me and select one.`;
+
+    case "SUCCESS":
+      return `Task created.`;
+  }
+};
+
 export async function addTask(
   conv: ActionsSdkConversation,
   userId: string,
@@ -31,16 +44,3 @@ async function addTaskInner(userId: string, taskName: string): Promise<Result> {
 }
 
 type Result = "ASANA_NOT_LINKED" | "DEFAULT_WORKSPACE_NOT_CHOSEN" | "SUCCESS";
-
-const getMessage = (result: Result): string => {
-  switch (result) {
-    case "ASANA_NOT_LINKED":
-      return `Your asana account isn't linked yet. Go to asana-action.0xcaff.me and link it.`;
-
-    case "DEFAULT_WORKSPACE_NOT_CHOSEN":
-      return `A default workspace hasn't been selected. Go to asana-action.0xcaff.me and select one.`;
-
-    case "SUCCESS":
-      return `Task created.`;
-  }
-};
