@@ -17,7 +17,7 @@
       },
       {
         "source": "/fulfillment",
-        "function": "fulfilment"
+        "function": "fulfillment"
       },
       {
         "source": "**",
