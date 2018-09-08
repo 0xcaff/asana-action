@@ -20,10 +20,10 @@ interface LiveData {
 export interface SignIn2 {
   render: (
     element: HTMLElement,
-    opts: {
-      scope: string;
-      onsuccess: (user: GoogleUser) => void;
-      onfailure: (err: any) => void;
+    opts?: {
+      scope?: string;
+      onsuccess?: (user: GoogleUser) => void;
+      onfailure?: (err: any) => void;
     }
   ) => void;
 }

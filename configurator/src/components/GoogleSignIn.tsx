@@ -15,7 +15,13 @@ interface Props {
   onSignInChanged: (response: AuthResponse) => void;
 }
 
-export class GoogleSignIn extends React.Component<Props> {
+interface State {
+  loaded: boolean;
+}
+
+export class GoogleSignIn extends React.Component<Props, State> {
+  public state = { loaded: false };
+
   private async initSignIn(gapi: GAPI): Promise<Auth2Instance> {
     await loaded(gapi, "auth2");
     const auth2 = gapi.auth2.init({ clientId: this.props.clientId });
@@ -24,10 +30,8 @@ export class GoogleSignIn extends React.Component<Props> {
 
   public async componentDidMount() {
     const gapi = await getGapi();
-    const auth2 = await this.initSignIn(gapi);
-
-    auth2.isSignedIn.listen(console.log);
-    auth2.currentUser.listen(console.log);
+    await this.initSignIn(gapi);
+    this.setState({ loaded: true });
   }
 
   private onRef = async (e: HTMLDivElement | null) => {
@@ -51,6 +55,10 @@ export class GoogleSignIn extends React.Component<Props> {
   };
 
   public render() {
-    return <div style={{ height: 36, width: 120 }} ref={this.onRef} />;
+    return this.state.loaded ? (
+      <div style={{ height: 36, width: 120 }} ref={this.onRef} />
+    ) : (
+      <div>Loading...</div>
+    );
   }
 }
