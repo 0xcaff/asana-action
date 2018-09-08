@@ -4,6 +4,7 @@
   },
   "scripts": {
     "fix-style": "prettier --write $npm_package_config_prettierFiles",
+    "check-style": "prettier --list-different $npm_package_config_prettierFiles",
     "serve": "NODE_ENV=development firebase serve"
   },
   "devDependencies": {
