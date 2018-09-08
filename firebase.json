@@ -12,16 +12,16 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
-        "source": "**",
-        "destination": "/index.html"
-      },
-      {
         "source": "/graphql",
         "function": "graphql"
       },
       {
         "source": "/fulfillment",
         "function": "fulfilment"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   },
