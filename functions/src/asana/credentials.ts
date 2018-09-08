@@ -1,4 +1,5 @@
 import { isDevelopment } from "../env";
+import * as functions from "firebase-functions";
 
 export interface Credentials {
   redirectUri: string;
@@ -15,7 +16,7 @@ const dev: Credentials = {
 const prod: Credentials = {
   redirectUri: "https://asana-action.0xcaff.me/asana/oauth",
   clientId: "806084040989196",
-  clientSecret: "7e491593a43fef4ff574fe7f07068c30"
+  clientSecret: functions.config().asana.secret
 };
 
 export const credentials = isDevelopment ? dev : prod;
