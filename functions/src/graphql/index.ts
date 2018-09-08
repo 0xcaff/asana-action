@@ -10,5 +10,5 @@ export const server = new ApolloServer({
   resolvers: { Mutation: mutations, ...queries },
   context,
   playground: isDevelopment,
-  debug: isDevelopment,
+  debug: isDevelopment
 });
