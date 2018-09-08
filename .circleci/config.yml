@@ -81,14 +81,6 @@ workflows:
     jobs:
       - test
 
-      - hold:
-          type: approval
-          requires:
-           - test
-          filters:
-            branches:
-              only: master
-
       - deploy:
           requires:
-            - hold
+            - test
