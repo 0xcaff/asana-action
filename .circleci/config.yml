@@ -72,6 +72,18 @@ jobs:
           key: functions-deps-{{ checksum "functions/package-lock.json" }}
 
       - run:
+          name: Provide GActions CLI Credentials
+          command: echo "$ACTIONS_ON_GOOGLE_KEY" | base64 --decode > creds.data
+
+      - run:
+          name: Download GActions
+          command: curl -O https://dl.google.com/gactions/updates/bin/linux/amd64/gactions/gactions && chmod +x gactions
+
+      - run:
+          name: Deploy to GActions
+          command: ./gactions update --project $GCLOUD_PROJECT_ID --action_package actions/action.json
+
+      - run:
           name: Deploy
           command: yarn firebase deploy --token "$FIREBASE_TOKEN"
 
@@ -84,3 +96,7 @@ workflows:
       - deploy:
           requires:
             - test
+
+          filters:
+            branches:
+              only: master
