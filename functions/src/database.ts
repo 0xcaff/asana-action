@@ -13,8 +13,8 @@ export interface User {
   refreshToken: string;
   accessToken: AccessToken;
   chosenWorkspaceId?: string;
-  email: string,
-  name: string,
+  email: string;
+  name: string;
 }
 
 export interface AccessToken {

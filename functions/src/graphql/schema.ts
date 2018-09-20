@@ -8,10 +8,10 @@ export const typeDefs = gql`
 
   type User {
     id: String!
-    
+
     # Asana workspaces associated with this user.
     workspaces: [Workspace!]!
-    
+
     # The identifier of the workspace associated with the user.
     chosenWorkspaceId: String
   }
@@ -21,7 +21,7 @@ export const typeDefs = gql`
     # authentication causes an error.
     me: User!
   }
-  
+
   type AuthResponse {
     token: String!
   }
