@@ -1,5 +1,5 @@
 import { db, User } from "../database";
-import { Context } from "./context";
+import { Context, ensureUser } from "./context";
 import {
   exchangeAuthorizationCode,
   convertToDatabaseToken,
@@ -22,7 +22,9 @@ export const mutations: IResolverObject<void, Context> = {
     const accessToken = convertToDatabaseToken(token);
     const me = await getMe(accessToken.token);
 
+    const previousUser = await db.getUser(me.gid);
     const user: User = {
+      ...previousUser,
       id: me.gid,
       accessToken: convertToDatabaseToken(token),
       refreshToken: token.refresh_token,
@@ -37,12 +39,9 @@ export const mutations: IResolverObject<void, Context> = {
   },
 
   async setDefaultWorkspace(_: void, args, context: Context): Promise<{}> {
-    if (!context.user) {
-      throw new Error("Authorization Required");
-    }
-
+    const oldUser = ensureUser(context);
     await db.updateUser({
-      ...context.user,
+      ...oldUser,
       chosenWorkspaceId: args.id
     });
 
