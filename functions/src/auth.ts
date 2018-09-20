@@ -1,8 +1,8 @@
 import * as jwt from "jsonwebtoken";
 import * as functions from "firebase-functions";
 
-const publicKey = functions.config().public_key;
-const privateKey = functions.config().private_key;
+const publicKey = functions.config().jwt.public_key;
+const privateKey = functions.config().jwt.private_key;
 
 export interface Payload {
   /**
