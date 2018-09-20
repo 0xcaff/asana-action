@@ -7,13 +7,7 @@ import { Omit } from "../utils";
 const mutation = gql`
   mutation LinkMutation($code: String!) {
     linkAsana(authorizationCode: $code) {
-      id
-
-      asana {
-        chosenWorkspace {
-          id
-        }
-      }
+      token
     }
   }
 `;
@@ -22,6 +16,12 @@ interface Variables {
   code: string;
 }
 
+interface Data {
+  linkAsana: {
+    token: string;
+  };
+}
+
 export const LinkMutation = (
-  props: Omit<MutationProps<{}, Variables>, "mutation">
+  props: Omit<MutationProps<Data, Variables>, "mutation">
 ) => <Mutation mutation={mutation} {...props} />;

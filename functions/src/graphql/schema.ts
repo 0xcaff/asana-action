@@ -6,14 +6,14 @@ export const typeDefs = gql`
     name: String!
   }
 
-  type AsanaInformation {
-    workspaces: [Workspace!]!
-    chosenWorkspace: Workspace
-  }
-
   type User {
     id: String!
-    asana: AsanaInformation
+
+    # Asana workspaces associated with this user.
+    workspaces: [Workspace!]!
+
+    # The identifier of the workspace associated with the user.
+    chosenWorkspaceId: String
   }
 
   type Query {
@@ -22,8 +22,12 @@ export const typeDefs = gql`
     me: User!
   }
 
+  type AuthResponse {
+    token: String!
+  }
+
   type Mutation {
-    linkAsana(authorizationCode: String!): User!
+    linkAsana(authorizationCode: String!): AuthResponse!
     setDefaultWorkspace(id: String!): User!
   }
 

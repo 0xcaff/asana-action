@@ -9,16 +9,12 @@ const query = gql`
     me {
       id
 
-      asana {
-        workspaces {
-          id
-          name
-        }
-
-        chosenWorkspace {
-          id
-        }
+      workspaces {
+        id
+        name
       }
+
+      chosenWorkspaceId
     }
   }
 `;
@@ -28,17 +24,9 @@ export interface Workspace {
   name: string;
 }
 
-interface BareWorkspace {
-  id: string;
-}
-
-interface Asana {
-  workspaces: Workspace[];
-  chosenWorkspace: BareWorkspace | null;
-}
-
 interface User {
-  asana?: Asana;
+  workspaces: Workspace[];
+  chosenWorkspaceId: string | null;
 }
 
 interface Data {

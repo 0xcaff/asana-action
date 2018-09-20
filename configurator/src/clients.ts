@@ -1,9 +1,5 @@
 export const rawIds = {
   development: {
-    google: {
-      clientId:
-        "942954643395-0dngcnr16e988cc91262vgln9scfug8u.apps.googleusercontent.com"
-    },
     asana: {
       clientId: "806084040989198",
       redirectUri: "http://localhost:3000/asana/oauth"
@@ -18,12 +14,7 @@ export const rawIds = {
 };
 
 interface Identifiers {
-  google: Google;
   asana: Asana;
-}
-
-interface Google {
-  clientId: string;
 }
 
 interface Asana {

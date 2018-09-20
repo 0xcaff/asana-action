@@ -1,7 +1,7 @@
 import {
-  Asana,
   Database,
-  AccessToken as DatabaseAccessToken
+  AccessToken as DatabaseAccessToken,
+  User as DatabaseUser
 } from "../database";
 import { AccessToken, refreshAccessToken } from "./auth";
 import { credentials } from "./credentials";
@@ -15,29 +15,28 @@ export const convertToDatabaseToken = (
 });
 
 /**
- * Refreshes the token held by the asana variable if needed. The values in asana
+ * Refreshes the token held by the user variable if needed. The values in user
  * are mutated.
  *
- * @param asana Container for token information.
+ * @param user Container for token information.
  */
-async function refreshTokenIfNeeded(asana: Asana): Promise<void> {
+async function refreshTokenIfNeeded(user: DatabaseUser): Promise<void> {
   const currentTime = getTime();
 
-  if (currentTime < asana.accessToken.expiryTime - 60) {
+  if (currentTime < user.accessToken.expiryTime - 60) {
     return;
   }
 
-  const token = await refreshAccessToken(asana.refreshToken, credentials);
-  asana.accessToken = convertToDatabaseToken(token);
+  const token = await refreshAccessToken(user.refreshToken, credentials);
+  user.accessToken = convertToDatabaseToken(token);
 
   return;
 }
 
 export async function refreshAndSaveToken(
-  asana: Asana,
-  userId: string,
+  user: DatabaseUser,
   db: Database
 ): Promise<void> {
-  await refreshTokenIfNeeded(asana);
-  await db.updateUser(userId, { asana });
+  await refreshTokenIfNeeded(user);
+  await db.updateUser(user);
 }
