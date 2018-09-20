@@ -4,6 +4,7 @@ import { Query, QueryProps } from "react-apollo";
 
 import { Omit } from "../utils";
 
+// TODO: Update Types
 const query = gql`
   query AsanaQuery {
     me {

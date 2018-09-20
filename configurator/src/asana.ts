@@ -1,3 +1,5 @@
+import { ids } from "./clients";
+
 interface Options {
   clientId: string;
   redirectUri: string;
@@ -20,3 +22,9 @@ export const getAuthorizationEndpoint = (options: Options): string => {
 
   return url.toString();
 };
+
+export const asanaAuthorizationUrl = getAuthorizationEndpoint({
+  responseType: "code",
+  state: "",
+  ...ids.asana
+});

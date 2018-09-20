@@ -1,6 +1,8 @@
 {
   "accountLinking": {
-    "googleSignInClientId": "942954643395-90r4fv3iqqnspl3fb16jou5drmpf6g6b.apps.googleusercontent.com"
+    "clientId": "1a295505-aa10-444d-8707-62fd01188836",
+    "grantType": "IMPLICIT",
+    "authenticationUrl": "https://asana-action.0xcaff.me/assistant/link"
   },
   "actions": [
     {

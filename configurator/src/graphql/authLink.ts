@@ -14,4 +14,8 @@ export class AuthLink extends ApolloLink {
   public setToken(newToken?: string) {
     this.token = newToken;
   }
+
+  public getToken() {
+    return this.token;
+  }
 }

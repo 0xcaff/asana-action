@@ -46,9 +46,15 @@ export const DarkHeading = styled(Heading)`
   color: ${black};
 `;
 
-export const FullPageError = () => (
+interface Props {
+  children?: React.ReactNode;
+}
+
+export const FullPageError = (props: Props) => (
   <Content>
-    <DarkHeading>Error Occurred! :(</DarkHeading>
+    <DarkHeading>
+      {props.children ? props.children : "Error Occurred! :("}
+    </DarkHeading>
   </Content>
 );
 

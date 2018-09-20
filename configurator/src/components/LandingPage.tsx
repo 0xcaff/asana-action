@@ -1,10 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
 
-import { Link } from "react-router-dom";
 import assistantLogo from "../logos/googleAssistant.svg";
 import asanaLogo from "../logos/asana.png";
-import { googleSignInPage } from "../paths";
 import {
   Background,
   BigCircle,
@@ -12,6 +10,7 @@ import {
   Heading,
   white
 } from "./styledComponents";
+import { asanaAuthorizationUrl } from "../asana";
 
 export const LandingPage = () => (
   <React.Fragment>
@@ -31,7 +30,7 @@ export const LandingPage = () => (
       </LeadText>
 
       <Action>
-        <ActionLink to={googleSignInPage}>Get Started!</ActionLink>
+        <ActionLink href={asanaAuthorizationUrl}>Get Started!</ActionLink>
       </Action>
     </CircleContainer>
   </React.Fragment>
@@ -88,7 +87,7 @@ const AsanaLogo = styled.img.attrs({ src: asanaLogo })`
   margin-right: 1em;
 `;
 
-const ActionLink = styled(Link)`
+const ActionLink = styled.a`
   display: inline-block;
 
   padding-left: 24px;

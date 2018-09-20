@@ -1,49 +1,33 @@
 import * as React from "react";
 
 import { AsanaQuery } from "./AsanaQuery";
-import { getAuthorizationEndpoint } from "./asana";
-import { ids } from "../clients";
-import { Redirect } from "react-router";
-import { googleSignInPage } from "../paths";
 import { WorkspacePicker } from "./WorkspacePicker";
 import { SetDefaultWorkspaceMutation } from "./SetDefaultWorkspaceMutation";
 import { FullPageError, FullPageLoading } from "./styledComponents";
+import { authLink } from "../graphql/client";
 
 interface Props {
-  authToken?: string;
+  linkState?: string;
 }
 
-export const ConfigPage = (props: Props) => {
-  const authToken = props.authToken;
-  if (!authToken) {
-    return <Redirect to={googleSignInPage} />;
-  }
-
-  return (
-    <AsanaQuery>
-      {queryResult => {
-        if (queryResult.error) {
-          return <FullPageError />;
-        }
-
-        if (queryResult.loading || !queryResult.data) {
-          return <FullPageLoading />;
-        }
-
-        if (!queryResult.data.me.asana) {
-          window.location.assign(
-            getAuthorizationEndpoint({
-              responseType: "code",
-              state: authToken,
-              ...ids.asana
-            })
-          );
-
-          return null;
-        }
-
-        const myAsana = queryResult.data.me.asana;
+export const ConfigPage = (props: Props) => (
+  <AsanaQuery>
+    {queryResult => {
+      if (queryResult.error) {
         return (
+          <FullPageError>
+            Backend Error. {queryResult.error.message}
+          </FullPageError>
+        );
+      }
+
+      if (queryResult.loading || !queryResult.data) {
+        return <FullPageLoading />;
+      }
+
+      const myAsana = queryResult.data.me.asana;
+      return (
+        <React.Fragment>
           <SetDefaultWorkspaceMutation>
             {(mutateFn, results) => (
               <WorkspacePicker
@@ -58,8 +42,32 @@ export const ConfigPage = (props: Props) => {
               />
             )}
           </SetDefaultWorkspaceMutation>
-        );
-      }}
-    </AsanaQuery>
-  );
-};
+          {props.linkState && (
+            <AssistantLinkResult
+              linkState={props.linkState}
+              token={authLink.getToken()}
+            >
+              Return to Google Assistant
+            </AssistantLinkResult>
+          )}
+        </React.Fragment>
+      );
+    }}
+  </AsanaQuery>
+);
+
+interface LinkResultProps {
+  linkState: string;
+  token: string | undefined;
+  children: React.ReactNode;
+}
+
+export const AssistantLinkResult = (props: LinkResultProps) => (
+  <a
+    href={`https://oauth-redirect.googleusercontent.com/r/asana-e43ee#access_token=${
+      props.token
+    }&token_type=bearer&state=${props.linkState}`}
+  >
+    {props.children}
+  </a>
+);
