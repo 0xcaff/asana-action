@@ -1,35 +1,50 @@
-import { db } from "../database";
+import { db, User } from "../database";
 import { Context } from "./context";
-import { exchangeAuthorizationCode, convertToDatabaseToken } from "../asana";
+import {
+  exchangeAuthorizationCode,
+  convertToDatabaseToken,
+  getMe
+} from "../asana";
 import { credentials } from "../asana/credentials";
 import { IResolverObject } from "apollo-server-express";
+import { sign } from "../auth";
+
+interface AuthResponse {
+  token: string;
+}
 
 export const mutations: IResolverObject<void, Context> = {
-  async linkAsana(_: void, args, context: Context): Promise<{}> {
+  async linkAsana(_: void, args): Promise<AuthResponse> {
     const token = await exchangeAuthorizationCode(
       args.authorizationCode,
       credentials
     );
-    const user = {
-      asana: {
-        accessToken: convertToDatabaseToken(token),
-        refreshToken: token.refresh_token
-      }
+    const accessToken = convertToDatabaseToken(token);
+    const me = await getMe(accessToken.token);
+
+    const user: User = {
+      id: me.gid,
+      accessToken: convertToDatabaseToken(token),
+      refreshToken: token.refresh_token,
+      email: me.email,
+      name: me.name
     };
 
-    await db.updateUser(context.userId, user);
+    await db.updateUser(user);
+    const localAccessToken = await sign({ sub: me.gid });
 
-    return {};
+    return { token: localAccessToken };
   },
 
   async setDefaultWorkspace(_: void, args, context: Context): Promise<{}> {
-    const user = await db.getUser(context.userId);
-    if (!user.asana) {
-      throw new TypeError("setDefaultWorkspace called before linking asana");
+    if (!context.user) {
+      throw new Error("Authorization Required");
     }
 
-    user.asana.chosenWorkspaceId = args.id;
-    await db.updateUser(context.userId, user);
+    await db.updateUser({
+      ...context.user,
+      chosenWorkspaceId: args.id
+    });
 
     return {};
   }

@@ -1,7 +1,6 @@
-import { Context } from "./context";
-import { Asana, db } from "../database";
+import { Context, ensureUser } from "./context";
+import { db } from "../database";
 import {
-  getWorkspace,
   getWorkspaces,
   refreshAndSaveToken,
   Workspace as APIWorkspace
@@ -24,40 +23,24 @@ export const queries: IResolverObject<void, Context> = {
   },
 
   User: {
-    id: (_parent: void, _args, context: Context): string => context.userId,
+    id: (_parent: void, _args, context: Context): string =>
+      ensureUser(context).id,
 
-    async asana(_parent: void, _args, context: Context): Promise<Asana | null> {
-      const user = await db.getUser(context.userId);
-      return user.asana || null;
-    }
-  },
-
-  AsanaInformation: {
     async workspaces(
-      asana: Asana,
+      _parent: void,
       _args,
       context: Context
     ): Promise<Workspace[]> {
-      await refreshAndSaveToken(asana, context.userId, db);
-      const workspaces = await getWorkspaces(asana.accessToken.token);
+      const user = ensureUser(context);
+      await refreshAndSaveToken(user, db);
+      const workspaces = await getWorkspaces(user.accessToken.token);
       return workspaces.map(mapWorkspace);
     },
 
-    async chosenWorkspace(
-      asana: Asana,
+    chosenWorkspaceId: (
+      _parent: void,
       _args,
       context: Context
-    ): Promise<Workspace | null> {
-      if (!asana.chosenWorkspaceId) {
-        return null;
-      }
-
-      await refreshAndSaveToken(asana, context.userId, db);
-      const workspace = await getWorkspace(
-        asana.chosenWorkspaceId,
-        asana.accessToken.token
-      );
-      return mapWorkspace(workspace);
-    }
-  } as IResolverObject<Asana, Context>
+    ): string | undefined => ensureUser(context).chosenWorkspaceId
+  }
 };

@@ -28,17 +28,17 @@ export async function addTask(
 
 async function addTaskInner(userId: string, taskName: string): Promise<Result> {
   const user = await db.getUser(userId);
-  if (!user.asana) {
+  if (!user) {
     return "ASANA_NOT_LINKED";
   }
 
-  const workspaceId = user.asana.chosenWorkspaceId;
+  const workspaceId = user.chosenWorkspaceId;
   if (!workspaceId) {
     return "DEFAULT_WORKSPACE_NOT_CHOSEN";
   }
 
-  await refreshAndSaveToken(user.asana, userId, db);
-  await createTask(taskName, workspaceId, user.asana.accessToken.token);
+  await refreshAndSaveToken(user, db);
+  await createTask(taskName, workspaceId, user.accessToken.token);
 
   return "SUCCESS";
 }

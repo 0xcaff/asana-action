@@ -1,26 +1,20 @@
 import { default as fetch, Response } from "node-fetch";
 import { URLSearchParams } from "url";
 
+export async function getMe(accessToken: string): Promise<User> {
+  const resp = await fetch("https://app.asana.com/api/1.0/users/me", {
+    headers: { authorization: `Bearer ${accessToken}` }
+  });
+
+  return await unwrapResponse<User>(resp);
+}
+
 export async function getWorkspaces(accessToken: string): Promise<Workspace[]> {
   const resp = await fetch("https://app.asana.com/api/1.0/workspaces", {
     headers: { authorization: `Bearer ${accessToken}` }
   });
 
   return await unwrapResponse<Workspace[]>(resp);
-}
-
-export async function getWorkspace(
-  workspaceId: string,
-  accessToken: string
-): Promise<Workspace> {
-  const resp = await fetch(
-    `https://app.asana.com/api/1.0/workspaces/${workspaceId}`,
-    {
-      headers: { authorization: `Bearer ${accessToken}` }
-    }
-  );
-
-  return await unwrapResponse<Workspace>(resp);
 }
 
 export async function createTask(
@@ -75,3 +69,10 @@ export interface Workspace {
   gid: string;
   name: string;
 }
+
+export interface User {
+  gid: string;
+  email: string;
+  name: string;
+}
+

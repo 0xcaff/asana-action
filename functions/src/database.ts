@@ -4,18 +4,17 @@ import * as functions from "firebase-functions";
 admin.initializeApp(functions.config().firebase);
 
 export interface Database {
-  getUser(userId: string): Promise<User>;
-  updateUser(userId: string, newUser: User): Promise<void>;
+  getUser(userId: string): Promise<User | null>;
+  updateUser(newUser: User): Promise<void>;
 }
 
 export interface User {
-  asana?: Asana;
-}
-
-export interface Asana {
+  id: string;
   refreshToken: string;
   accessToken: AccessToken;
   chosenWorkspaceId?: string;
+  email: string,
+  name: string,
 }
 
 export interface AccessToken {
@@ -30,19 +29,24 @@ class FirestoreDatabase implements Database {
     this.db = firebase;
   }
 
-  async getUser(userId: string): Promise<User> {
+  async getUser(userId: string): Promise<User | null> {
     const doc = await this.db
       .collection("users")
       .doc(userId)
       .get();
 
-    return doc.data() || {};
+    const data = doc.data();
+    if (!data) {
+      return null;
+    }
+
+    return data as User;
   }
 
-  async updateUser(userId: string, newUser: User): Promise<void> {
+  async updateUser(newUser: User): Promise<void> {
     await this.db
       .collection("users")
-      .doc(userId)
+      .doc(newUser.id)
       .set(newUser);
   }
 }
