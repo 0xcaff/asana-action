@@ -4,22 +4,17 @@ import { Query, QueryProps } from "react-apollo";
 
 import { Omit } from "../utils";
 
-// TODO: Update Types
 const query = gql`
   query AsanaQuery {
     me {
       id
 
-      asana {
-        workspaces {
-          id
-          name
-        }
-
-        chosenWorkspace {
-          id
-        }
+      workspaces {
+        id
+        name
       }
+
+      chosenWorkspaceId
     }
   }
 `;
@@ -29,17 +24,9 @@ export interface Workspace {
   name: string;
 }
 
-interface BareWorkspace {
-  id: string;
-}
-
-interface Asana {
-  workspaces: Workspace[];
-  chosenWorkspace: BareWorkspace | null;
-}
-
 interface User {
-  asana?: Asana;
+  workspaces: Workspace[];
+  chosenWorkspaceId: string | null;
 }
 
 interface Data {

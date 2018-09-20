@@ -8,12 +8,6 @@ const mutation = gql`
   mutation SetDefaultWorkspaceMutation($workspaceId: String!) {
     setDefaultWorkspace(id: $workspaceId) {
       id
-
-      asana {
-        chosenWorkspace {
-          id
-        }
-      }
     }
   }
 `;

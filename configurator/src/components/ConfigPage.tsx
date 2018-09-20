@@ -25,17 +25,15 @@ export const ConfigPage = (props: Props) => (
         return <FullPageLoading />;
       }
 
-      const myAsana = queryResult.data.me.asana;
+      const user = queryResult.data.me;
       return (
         <React.Fragment>
           <SetDefaultWorkspaceMutation>
             {(mutateFn, results) => (
               <WorkspacePicker
                 loading={results.loading}
-                workspaces={myAsana.workspaces}
-                chosenWorkspaceId={
-                  myAsana.chosenWorkspace && myAsana.chosenWorkspace.id
-                }
+                workspaces={user.workspaces}
+                chosenWorkspaceId={user.chosenWorkspaceId}
                 choseWorkspace={workspaceId =>
                   mutateFn({ variables: { workspaceId } })
                 }

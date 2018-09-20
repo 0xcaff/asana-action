@@ -4,7 +4,6 @@ import { Mutation, MutationProps } from "react-apollo";
 
 import { Omit } from "../utils";
 
-// TODO: Implement on Backend
 const mutation = gql`
   mutation LinkMutation($code: String!) {
     linkAsana(authorizationCode: $code) {
