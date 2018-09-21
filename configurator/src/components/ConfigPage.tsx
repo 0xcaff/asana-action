@@ -3,7 +3,7 @@ import * as React from "react";
 import { AsanaQuery } from "./AsanaQuery";
 import { WorkspacePicker } from "./WorkspacePicker";
 import { SetDefaultWorkspaceMutation } from "./SetDefaultWorkspaceMutation";
-import { FullPageError, FullPageLoading } from "./styledComponents";
+import { Content, FullPageError, FullPageLoading } from "./styledComponents";
 import { authLink } from "../graphql/client";
 
 interface Props {
@@ -22,7 +22,7 @@ export const ConfigPage = (props: Props) => (
       }
 
       if (queryResult.loading || !queryResult.data) {
-        return <FullPageLoading />;
+        return <FullPageLoading/>;
       }
 
       const user = queryResult.data.me;
@@ -41,12 +41,14 @@ export const ConfigPage = (props: Props) => (
             )}
           </SetDefaultWorkspaceMutation>
           {props.linkState && (
-            <AssistantLinkResult
-              linkState={props.linkState}
-              token={authLink.getToken()}
-            >
-              Return to Google Assistant
-            </AssistantLinkResult>
+            <Content>
+              <AssistantLinkResult
+                linkState={props.linkState}
+                token={authLink.getToken()}
+              >
+                Return to Google Assistant
+              </AssistantLinkResult>
+            </Content>
           )}
         </React.Fragment>
       );
@@ -64,7 +66,7 @@ export const AssistantLinkResult = (props: LinkResultProps) => (
   <a
     href={`https://oauth-redirect.googleusercontent.com/r/asana-e43ee#access_token=${
       props.token
-    }&token_type=bearer&state=${props.linkState}`}
+      }&token_type=bearer&state=${props.linkState}`}
   >
     {props.children}
   </a>
