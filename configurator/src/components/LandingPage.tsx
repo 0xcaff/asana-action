@@ -6,12 +6,10 @@ import asanaLogo from "../logos/asana.png";
 import {
   Background,
   BigCircle,
-  black,
   Heading,
   white
 } from "./styledComponents";
 
-// TODO: Add Call to Action
 export const LandingPage = () => (
   <React.Fragment>
     <Background>
@@ -26,11 +24,15 @@ export const LandingPage = () => (
       <Heading>Asana + Google Assistant</Heading>
 
       <LeadText>
-        A unofficial tool to add tasks to Asana from Google Assistant.
+        A unofficial tool to add tasks to Asana using Google Assistant.
       </LeadText>
 
       <Action>
-        <ActionLink>Get Started!</ActionLink>
+        Try it by saying
+
+        <ActionPrompt>
+        Ok Google, Tell Asana Unofficial to add task "Cook Food"
+        </ActionPrompt>
       </Action>
     </CircleContainer>
   </React.Fragment>
@@ -47,7 +49,7 @@ const CircleContainer = styled.div`
   margin-top: 33vh;
   box-sizing: border-box;
   padding-left: 10em;
-  padding-right: 10em;
+  padding-right: 5em;
 `;
 
 const LeadText = styled.div`
@@ -57,6 +59,14 @@ const LeadText = styled.div`
 
 const Action = styled.div`
   margin-top: 3em;
+  color: ${white};
+  font-size: 1.375rem;
+`;
+
+const ActionPrompt = styled.div`
+  color: ${white};
+  padding-top: 1em;
+  padding-left: 1em;
 `;
 
 const LogosContainer = styled.div`
@@ -87,21 +97,3 @@ const AsanaLogo = styled.img.attrs({ src: asanaLogo })`
   margin-right: 1em;
 `;
 
-const ActionLink = styled.a`
-  display: inline-block;
-
-  padding-left: 24px;
-  padding-right: 24px;
-  height: 45px;
-  line-height: 45px;
-  border-radius: 3px;
-
-  text-decoration: none;
-  color: ${black};
-  background: ${white};
-  transition: background-color 0.15s;
-
-  &:hover {
-    background: #ddd;
-  }
-`;
