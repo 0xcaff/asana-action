@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { Workspace } from "./AsanaQuery";
-import { Content, DarkHeading } from "./styledComponents";
+import { DarkHeading } from "./styledComponents";
 
 interface Props {
   workspaces: Workspace[];
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const WorkspacePicker = (props: Props) => (
-  <Content>
+  <React.Fragment>
     <DarkHeading>Choose a default workspace:</DarkHeading>
 
     <select
@@ -30,5 +30,5 @@ export const WorkspacePicker = (props: Props) => (
     </select>
 
     {props.loading && <span>Loading...</span>}
-  </Content>
+  </React.Fragment>
 );
