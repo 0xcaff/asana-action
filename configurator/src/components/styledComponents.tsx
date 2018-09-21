@@ -36,7 +36,7 @@ export const Content = styled.div`
   max-width: 600px;
   margin-left: 3em;
   margin-right: 3em;
-  
+
   margin-top: 10em;
 
   display: flex;
