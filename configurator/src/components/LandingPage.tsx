@@ -3,12 +3,7 @@ import styled from "styled-components";
 
 import assistantLogo from "../logos/googleAssistant.svg";
 import asanaLogo from "../logos/asana.png";
-import {
-  Background,
-  BigCircle,
-  Heading,
-  white
-} from "./styledComponents";
+import { Background, BigCircle, Heading, white } from "./styledComponents";
 
 export const LandingPage = () => (
   <React.Fragment>
@@ -29,9 +24,8 @@ export const LandingPage = () => (
 
       <Action>
         Try it by saying
-
         <ActionPrompt>
-        Ok Google, Tell Asana Unofficial to add task "Cook Food"
+          Ok Google, Tell Asana Unofficial to add task "Cook Food"
         </ActionPrompt>
       </Action>
     </CircleContainer>
@@ -96,4 +90,3 @@ const AsanaLogo = styled.img.attrs({ src: asanaLogo })`
 
   margin-right: 1em;
 `;
-
