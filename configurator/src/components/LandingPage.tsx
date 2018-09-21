@@ -10,8 +10,8 @@ import {
   Heading,
   white
 } from "./styledComponents";
-import { asanaAuthorizationUrl } from "../asana";
 
+// TODO: Add Call to Action
 export const LandingPage = () => (
   <React.Fragment>
     <Background>
@@ -30,7 +30,7 @@ export const LandingPage = () => (
       </LeadText>
 
       <Action>
-        <ActionLink href={asanaAuthorizationUrl}>Get Started!</ActionLink>
+        <ActionLink>Get Started!</ActionLink>
       </Action>
     </CircleContainer>
   </React.Fragment>

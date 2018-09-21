@@ -32,9 +32,11 @@ export const Heading = styled.h1`
 `;
 
 export const Content = styled.div`
+  min-width: 600px;
   max-width: 600px;
-  margin-left: 10em;
-  margin-right: 10em;
+  margin-left: 3em;
+  margin-right: 3em;
+  
   margin-top: 10em;
 
   display: flex;

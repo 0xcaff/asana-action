@@ -18,6 +18,8 @@ export const App = () => (
   <BrowserRouter>
     <ApolloProvider client={client}>
       <Switch>
+        <Route exact path={landingPage} render={() => <LandingPage />} />
+
         <Route
           exact
           path="/assistant/link"
@@ -43,8 +45,6 @@ export const App = () => (
             );
           }}
         />
-
-        <Route exact path={landingPage} render={() => <LandingPage />} />
 
         <Route
           exact
