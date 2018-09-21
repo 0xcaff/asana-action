@@ -21,7 +21,7 @@ export const AsanaOauthRedirectPage = (props: Props) => (
           <Redirect
             to={{
               pathname: configurationPage,
-              state: { linkToken: props.linkToken }
+              state: { linkState: props.linkToken }
             }}
           />
         );
