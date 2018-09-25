@@ -4,11 +4,11 @@ import { db } from "../database";
 
 const getMessage = (result: Result): string => {
   switch (result) {
-    case "ASANA_NOT_LINKED":
-      return `Your asana account isn't linked yet. Go to asana-action.0xcaff.me and link it.`;
+    case "USER_NOT_FOUND":
+      return `Your asana account isn't linked yet. Link it through the Google Assistant app.`;
 
     case "DEFAULT_WORKSPACE_NOT_CHOSEN":
-      return `A default workspace hasn't been selected. Go to asana-action.0xcaff.me and select one.`;
+      return `A default workspace hasn't been selected. Please re-link your account.`;
 
     case "SUCCESS":
       return `Task created.`;
@@ -29,7 +29,7 @@ export async function addTask(
 async function addTaskInner(userId: string, taskName: string): Promise<Result> {
   const user = await db.getUser(userId);
   if (!user) {
-    return "ASANA_NOT_LINKED";
+    return "USER_NOT_FOUND";
   }
 
   const workspaceId = user.chosenWorkspaceId;
@@ -43,4 +43,4 @@ async function addTaskInner(userId: string, taskName: string): Promise<Result> {
   return "SUCCESS";
 }
 
-type Result = "ASANA_NOT_LINKED" | "DEFAULT_WORKSPACE_NOT_CHOSEN" | "SUCCESS";
+type Result = "USER_NOT_FOUND" | "DEFAULT_WORKSPACE_NOT_CHOSEN" | "SUCCESS";

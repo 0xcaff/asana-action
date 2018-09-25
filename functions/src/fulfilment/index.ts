@@ -13,7 +13,7 @@ export const app = actionssdk({
 
 app.intent("actions.intent.MAIN", conv =>
   conv.close(
-    `Hey, you can ask me to add tasks to Asana by saying "Tell Asana to add task Get Groceries."`
+    `Hey, you can ask me to add tasks to Asana by saying "Tell Asana Unofficial to add task, Get Groceries.`
   )
 );
 
