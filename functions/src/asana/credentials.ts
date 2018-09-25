@@ -19,4 +19,8 @@ const prod: Credentials = {
   clientSecret: functions.config().asana.secret
 };
 
+/**
+ * Application wide shared credentials used when refreshing authentication
+ * tokens. Populated with different values based on environments.
+ */
 export const credentials = isDevelopment ? dev : prod;

@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { AsanaQuery } from "./AsanaQuery";
-import { SetDefaultWorkspaceMutation } from "./SetDefaultWorkspaceMutation";
+import { AsanaQuery } from "./graphql/AsanaQuery";
+import { SetDefaultWorkspaceMutation } from "./graphql/SetDefaultWorkspaceMutation";
 import { FullPageError, FullPageLoading } from "./styledComponents";
 import { authLink } from "../graphql/client";
 import { ConfigurationEditor } from "./ConfigurationEditor";
@@ -10,6 +10,10 @@ interface Props {
   linkState?: string;
 }
 
+/**
+ * Configuration page. User is sent here after they've provided their Asana
+ * credentials.
+ */
 export const ConfigPage = (props: Props) => (
   <AsanaQuery>
     {queryResult => {

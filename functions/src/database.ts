@@ -3,8 +3,23 @@ import * as functions from "firebase-functions";
 
 admin.initializeApp(functions.config().firebase);
 
+/**
+ * An abstraction around interaction with a database. It provides rudimentary
+ * type safety.
+ */
 export interface Database {
+  /**
+   * Gets a user. If the user doesn't exist, null is returned.
+   *
+   * @param userId ID of the user to get
+   */
   getUser(userId: string): Promise<User | null>;
+
+  /**
+   * Updates a user creating if necessary.
+   *
+   * @param newUser User information which should be in database
+   */
   updateUser(newUser: User): Promise<void>;
 }
 

@@ -1,3 +1,7 @@
+/**
+ * Asana client IDs and redirect uri's.
+ */
+
 export const rawIds = {
   development: {
     asana: {
@@ -25,5 +29,5 @@ interface Asana {
 const isProduction = process.env.NODE_ENV === "production";
 
 export const ids: Identifiers = isProduction
-  ? { ...rawIds.development, ...rawIds.production }
+  ? rawIds.production
   : rawIds.development;

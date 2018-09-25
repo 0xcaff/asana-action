@@ -18,7 +18,7 @@ export const convertToDatabaseToken = (
  * Refreshes the token held by the user variable if needed. The values in user
  * are mutated.
  *
- * @param user Container for token information.
+ * @param user Container for token information
  */
 async function refreshTokenIfNeeded(user: DatabaseUser): Promise<void> {
   const currentTime = getTime();
@@ -33,6 +33,13 @@ async function refreshTokenIfNeeded(user: DatabaseUser): Promise<void> {
   return;
 }
 
+/**
+ * Refreshes the token by calling {@link refreshTokenIfNeeded} and commits
+ * updated information to database. The user is mutated.
+ *
+ * @param user User to refresh token for. Mutated.
+ * @param db Database to save token to
+ */
 export async function refreshAndSaveToken(
   user: DatabaseUser,
   db: Database

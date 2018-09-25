@@ -1,3 +1,7 @@
+/**
+ * Functions to create and verify JWT tokens
+ */
+
 import * as jwt from "jsonwebtoken";
 import * as functions from "firebase-functions";
 
@@ -6,13 +10,19 @@ const privateKey = functions.config().jwt.private_key;
 
 export interface Payload {
   /**
-   * Unique identifier associated with an Asana account.
+   * Unique identifier associated with an Asana account
    */
   sub: string;
 }
 
 const algorithm = "RS256";
 
+/**
+ * Verifies that the JWT token in is valid. Uses our application's keys and
+ * settings.
+ *
+ * @param token Token to verify and decode
+ */
 export const verify = (token: string): Promise<Payload> =>
   new Promise((resolve, reject) =>
     jwt.verify(
@@ -29,6 +39,12 @@ export const verify = (token: string): Promise<Payload> =>
     )
   );
 
+/**
+ * Signs the payload and encodes it as a JWT token. Uses our application's keys
+ * and settings.
+ *
+ * @param payload Payload to sign
+ */
 export const sign = (payload: Payload): Promise<string> =>
   new Promise((resolve, reject) =>
     jwt.sign(

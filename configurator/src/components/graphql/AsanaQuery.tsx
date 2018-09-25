@@ -2,7 +2,7 @@ import * as React from "react";
 import gql from "graphql-tag";
 import { Query, QueryProps } from "react-apollo";
 
-import { Omit } from "../utils";
+import { Omit } from "../../utils";
 
 const query = gql`
   query AsanaQuery {

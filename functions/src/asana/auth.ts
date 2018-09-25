@@ -37,6 +37,11 @@ export const refreshAccessToken = async (
 
 type GrantType = "authorization_code" | "refresh_token";
 
+/**
+ * A helper method to make a request to the oauth_token endpoint.
+ *
+ * @param credentials Information for Asana to identify this application
+ */
 async function oauthToken<T>(
   credentials: Credentials,
   options: { grantType: GrantType; refreshToken?: string; code?: string }
@@ -58,6 +63,13 @@ async function oauthToken<T>(
   return await unwrapAuthResponse<T>(resp);
 }
 
+/**
+ * Helper method to return the contents of an authentication response
+ * (from oauth_token endpoint) throwing an error if there is one in the
+ * response.
+ *
+ * @param resp Response to unwrap.
+ */
 async function unwrapAuthResponse<T>(resp: Response): Promise<T> {
   if (resp.status !== 200) {
     throw await resp.text();

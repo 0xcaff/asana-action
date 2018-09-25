@@ -1,6 +1,10 @@
+/**
+ * Fulfilment for Action on Google. Is called by Google Assistant when the
+ * action is invoked. Responsible for taking action based on user request.
+ */
+
 import { actionssdk, SignIn } from "actions-on-google";
 import { isDevelopment as debug } from "../env";
-import { Data, SignInInput } from "./types";
 import { addTask } from "./addTask";
 import { verify } from "../auth";
 
@@ -45,3 +49,11 @@ app.intent(
     await addTask(conv, user.sub, taskName);
   }
 );
+
+interface Data {
+  taskName: string;
+}
+
+interface SignInInput {
+  status: "OK" | string;
+}

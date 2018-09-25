@@ -1,3 +1,7 @@
+/**
+ * A collection of styled components used around the application.
+ */
+
 import * as React from "react";
 import styled from "styled-components";
 

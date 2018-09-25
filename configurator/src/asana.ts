@@ -1,5 +1,3 @@
-import { ids } from "./clients";
-
 interface Options {
   clientId: string;
   redirectUri: string;
@@ -7,6 +5,9 @@ interface Options {
   state: string;
 }
 
+/**
+ * Builds the asana authorization endpoint url based on some options.
+ */
 export const getAuthorizationEndpoint = (options: Options): string => {
   const rawParams = {
     response_type: options.responseType,
@@ -22,9 +23,3 @@ export const getAuthorizationEndpoint = (options: Options): string => {
 
   return url.toString();
 };
-
-export const asanaAuthorizationUrl = getAuthorizationEndpoint({
-  responseType: "code",
-  state: "",
-  ...ids.asana
-});

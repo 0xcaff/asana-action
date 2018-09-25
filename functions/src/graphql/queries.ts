@@ -19,6 +19,9 @@ const mapWorkspace = (apiWorkspace: APIWorkspace): Workspace => ({
 
 export const queries: IResolverObject<void, Context> = {
   Query: {
+    // Returns a truth-y value so the User resolver is activated. Only one
+    // user's information can be gotten for a context so no additional
+    // information needs to be sent.
     me: () => ({})
   },
 
@@ -26,6 +29,10 @@ export const queries: IResolverObject<void, Context> = {
     id: (_parent: void, _args, context: Context): string =>
       ensureUser(context).id,
 
+    // I chose to put the workspace requesting in the backend because it avoids
+    // the complexity of making requests to Asana on both the server and client.
+    // IFTTT seems push all communication with third parties to the backend
+    // also.
     async workspaces(
       _parent: void,
       _args,

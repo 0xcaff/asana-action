@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Content } from "./styledComponents";
 import { WorkspacePicker } from "./WorkspacePicker";
-import { Workspace } from "./AsanaQuery";
+import { Workspace } from "./graphql/AsanaQuery";
 import styled from "styled-components";
 
 interface Props {

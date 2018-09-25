@@ -12,6 +12,9 @@ import { FullPageError } from "./styledComponents";
 import { getAuthorizationEndpoint } from "../asana";
 import { ids } from "../clients";
 
+/**
+ * Google Assistant Client ID
+ */
 const allowedClientId = "1a295505-aa10-444d-8707-62fd01188836";
 
 export const App = () => (
@@ -24,6 +27,9 @@ export const App = () => (
           exact
           path="/assistant/link"
           render={renderProps => {
+            // Implemented this as a client side redirect instead of a server
+            // side redirect because Cloud Functions boot slowly (~20s).
+
             const params = new URLSearchParams(renderProps.location.search);
             if (params.get("client_id") !== allowedClientId) {
               return <FullPageError>Invalid Assistant Client ID</FullPageError>;

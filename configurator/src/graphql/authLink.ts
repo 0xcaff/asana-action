@@ -1,5 +1,8 @@
 import { ApolloLink, Operation, NextLink } from "apollo-link";
 
+/**
+ * Stateful link which sends token in authorization header when set.
+ */
 export class AuthLink extends ApolloLink {
   private token?: string;
 

@@ -5,6 +5,10 @@ import assistantLogo from "../logos/googleAssistant.svg";
 import asanaLogo from "../logos/asana.png";
 import { Background, BigCircle, Heading, white } from "./styledComponents";
 
+/**
+ * A landing page which looks kinda cool. This was more necessary before
+ * switching to OAuth.
+ */
 export const LandingPage = () => (
   <React.Fragment>
     <Background>

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Workspace } from "./AsanaQuery";
+import { Workspace } from "./graphql/AsanaQuery";
 import { DarkHeading } from "./styledComponents";
 
 interface Props {
@@ -10,6 +10,9 @@ interface Props {
   choseWorkspace: (newWorkspaceId: string) => void;
 }
 
+/**
+ * Picker for an Asana workspace.
+ */
 export const WorkspacePicker = (props: Props) => (
   <React.Fragment>
     <DarkHeading>Choose a default workspace:</DarkHeading>
