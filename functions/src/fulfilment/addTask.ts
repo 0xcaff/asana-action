@@ -53,7 +53,7 @@ type Result = "USER_NOT_FOUND" | "DEFAULT_WORKSPACE_NOT_CHOSEN" | "SUCCESS";
  *
  * @param result To get message for
  */
-const getMessage = (result: Result): string => {
+function getMessage(result: Result): string {
   switch (result) {
     case "USER_NOT_FOUND":
       return `Your asana account isn't linked yet. Link it through the Google Assistant app.`;
@@ -64,4 +64,4 @@ const getMessage = (result: Result): string => {
     case "SUCCESS":
       return `Task created.`;
   }
-};
+}
