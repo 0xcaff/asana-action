@@ -23,7 +23,8 @@ export function withLogging<
     TArgument
   >
 ): ActionsSdkIntentHandler<TConvData, TUserStorage, TConversation, TArgument> {
-  return (conv, ...args) => {
+  return (conv, ...args: any[]) => {
+    // @ts-ignore
     const result = handler(conv, ...args);
 
     // Start logging in background.
