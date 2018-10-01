@@ -68,15 +68,12 @@ async function logEvent<TConvData, TUserStorage>(
   const agentMessage = set
     .newMessage()
     .setMessage(response)
-    .setAsNotFeedback()
     .setAsTypeAgent();
 
   if (conv.intent === "actions.intent.MAIN") {
     userMessage.setAsNotHandled();
-    agentMessage.setAsFeedback();
   } else {
     userMessage.setAsHandled();
-    agentMessage.setAsNotFeedback();
   }
 
   await set.sendMessageSet();
