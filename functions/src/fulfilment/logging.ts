@@ -27,6 +27,7 @@ export function withLogging<
     const result = handler(conv, ...args);
 
     // Start logging in background.
+    // tslint:disable-next-line
     logEvent(conv);
 
     return result;
