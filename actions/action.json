@@ -32,7 +32,8 @@
             "(to)? add (a)? task (to)? $org.schema.type.Text:name",
             "(to)? add (a)? task (for)? $org.schema.type.Text:name",
             "(to)? remind me (to)? $org.schema.type.Text:name",
-            "(to)? remember (to)? $org.schema.type.Text:name"
+            "(to)? remember (to)? $org.schema.type.Text:name",
+            "$org.schema.type.Text:name"
           ]
         }
       }
