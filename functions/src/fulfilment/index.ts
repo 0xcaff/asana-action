@@ -20,7 +20,7 @@ app.intent(
   "actions.intent.MAIN",
   withLogging(conv =>
     conv.close(
-      `Hey, you can ask me to add tasks to Asana by saying "Tell Asana Unofficial to add task, Get Groceries.`
+      `Hey, you can ask me to add tasks to Asana by saying something like, "Tell Asana Unofficial to add task, Get Groceries.`
     )
   )
 );
